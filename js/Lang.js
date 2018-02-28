@@ -83,7 +83,10 @@ class Lambda extends Expr {
     }
     
     toString() {
-        return "λ" + this.paramName + ": " + this.paramType + ", " + this.body;
+        const typed = this.paramType instanceof Var || this.paramType instanceof Star ?  
+            this.paramType : 
+            "(" + this.paramType + ")";
+        return "λ" + this.paramName + ": " + typed + ", " + this.body;
     }
 }
 
@@ -110,7 +113,10 @@ class Pi extends Expr {
     }
     
     toString() {
-        return "∀" + this.paramName + ": " + this.paramType + ", " + this.body;
+        const typed = this.paramType instanceof Var || this.paramType instanceof Star ?  
+                        this.paramType : 
+                        "(" + this.paramType + ")";
+        return "∀" + this.paramName + ": " + typed + ", " + this.body;
     }
 
 }
