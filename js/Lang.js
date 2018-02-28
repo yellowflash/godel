@@ -37,7 +37,7 @@ class Star extends Expr {
         return another instanceof Star;
     }
     toString() {
-        return "★";
+        return "*";
     }
 }
 
@@ -144,6 +144,4 @@ class App extends Expr {
     }
 }
 
-console.log(new Lambda("x", new Star(), new App(new Lambda("x", new Star(), new Var("x")), new Var("x"))).eval(Ctx.empty()).map(c => c.toString()));
-
-module.exports = {Ctx: Ctx, Star: Star, Var: Var, Lambda: Lambda, Pi: Pi, App: App }
+module.exports = {Ctx: Ctx, Star: Star, Var: Var, Lambda: Lambda, Pi: Pi, App: App};
