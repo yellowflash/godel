@@ -52,7 +52,8 @@ class Var extends Expr {
     }
     
     alphaConvertsTo(another, ctx) {
-        return (another instanceof Var) && (ctx.lookup(this.name) == another.name);
+        const renamed = ctx.lookup(this.name) || this.name;
+        return (another instanceof Var) && (renamed == another.name);
     }
     
     toString() {
@@ -132,10 +133,20 @@ class App extends Expr {
         const [argValue, argType] = this.arg.eval(ctx);
         const [fnValue, fnType] = this.fn.eval(ctx);
         
-        if(fnType instanceof Pi && fnType.paramType.alphaConvertsTo(argType, Ctx.empty())) {
-            return this.fn.body.eval(ctx.add(this.fn.paramName, [argValue, argType]))[0].eval(ctx);
+        if(fnType instanceof Pi) {
+            if(fnType.paramType.alphaConvertsTo(argType, Ctx.empty())) {
+                if(this.fn instanceof Lambda) {
+                    return this.fn.body.eval(ctx.add(this.fn.paramName, [argValue, argType]))[0].eval(ctx);
+                } else {
+                    return [
+                        new App(fnValue, argValue) ,
+                        fnType.body.eval(ctx.add(this.fn.paramName, [argValue, argType]))[0]];
+                }
+            } else {
+                throw "Argument to '" + fnValue + "' of type '" + fnType + "' is expected to be of type '" + fnType.paramType + "' but it was '" + argType + "'";
+            }
         } else {
-            throw "Type check fail";
+            throw "Expected a function taking arg of type '" + argType + "', but found '" + fnValue + "' of type '" + fnType + "'"
         }
     }
     
@@ -150,4 +161,4 @@ class App extends Expr {
     }
 }
 
-module.exports = {Ctx: Ctx, Star: Star, Var: Var, Lambda: Lambda, Pi: Pi, App: App};
+module.exports = {Ctx: Ctx, Star: Star, Var: Var, Lambda: Lambda, Pi: Pi, App: App};    
