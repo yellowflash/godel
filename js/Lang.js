@@ -1,3 +1,5 @@
+const Errors = require("./Errors.js")
+
 class Ctx {
     constructor(lookup) {
         this.lookup = lookup;
@@ -48,7 +50,9 @@ class Var extends Expr {
     }
     
     eval(ctx) {
-        return ctx.lookup(this.name);
+        const value = ctx.lookup(this.name);
+        if(!value) throw new Error.UndefinedVariable(value);
+        return value;
     }
     
     alphaConvertsTo(another, ctx) {
@@ -143,10 +147,10 @@ class App extends Expr {
                         fnType.body.eval(ctx.add(this.fn.paramName, [argValue, argType]))[0]];
                 }
             } else {
-                throw "Argument to '" + fnValue + "' of type '" + fnType + "' is expected to be of type '" + fnType.paramType + "' but it was '" + argType + "'";
+                throw new Errors.ArgumentTypeDontMatch(fnValue, fnType, argValue, argType);
             }
         } else {
-            throw "Expected a function taking arg of type '" + argType + "', but found '" + fnValue + "' of type '" + fnType + "'"
+            throw new Errors.NotAFunction(fnValue, argValue, argType);
         }
     }
     
