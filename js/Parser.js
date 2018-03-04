@@ -33,12 +33,12 @@ const definition =
         identifier, 
         P.opt(P.string(":").then(expression)), 
         P.string("=").then(expression), 
-        P.string("."))).map(([name, type, body, fullstop]) => new DefLang.Definition(name, type, body));
+        P.string("."))).map(([name, type, body, fullstop]) => new DefLang.Definition(name, type, body)).trim(P.optWhitespace);
 
 const axiom = P.string("axiom").then(P.seq(
     identifier,
     P.string(":").then(expression),
-    P.string("."))).map(([name, type, fullstop]) => new DefLang.Axiom(name, type));
+    P.string("."))).map(([name, type, fullstop]) => new DefLang.Axiom(name, type)).trim(P.optWhitespace);
 
 
 const program = P.alt(definition, axiom).many().map((definitions) => new DefLang.Program(definitions));

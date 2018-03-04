@@ -51,7 +51,7 @@ class Var extends Expr {
     
     eval(ctx) {
         const value = ctx.lookup(this.name);
-        if(!value) throw new Error.UndefinedVariable(value);
+        if(!value) throw new Errors.UndefinedVariable(value);
         return value;
     }
     
@@ -136,7 +136,6 @@ class App extends Expr {
     eval(ctx) {
         const [argValue, argType] = this.arg.eval(ctx);
         const [fnValue, fnType] = this.fn.eval(ctx);
-        
         if(fnType instanceof Pi) {
             if(fnType.paramType.alphaConvertsTo(argType, Ctx.empty())) {
                 if(this.fn instanceof Lambda) {
