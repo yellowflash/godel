@@ -51,7 +51,7 @@ class Var extends Expr {
     
     eval(ctx) {
         const value = ctx.lookup(this.name);
-        if(!value) throw new Errors.UndefinedVariable(value);
+        if(!value) throw new Errors.UndefinedVariable(this.name);
         return value;
     }
     
@@ -106,7 +106,7 @@ class Pi extends Expr {
     eval(ctx) {
         const [pType, pTypeType] = this.paramType.eval(ctx);
         const [bodyVal, bodyType] = this.body.eval(ctx.add(this.paramName, [new Var(this.paramName), pType]));
-                                                                  
+               
         return [new Pi(this.paramName, pType, bodyVal), 
                 new Star()];
     }
@@ -143,7 +143,7 @@ class App extends Expr {
                 } else {
                     return [
                         new App(fnValue, argValue) ,
-                        fnType.body.eval(ctx.add(this.fn.paramName, [argValue, argType]))[0]];
+                        fnType.body.eval(ctx.add(fnType.paramName, [argValue, argType]))[0]];
                 }
             } else {
                 throw new Errors.ArgumentTypeDontMatch(fnValue, fnType, argValue, argType);

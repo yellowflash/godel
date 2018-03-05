@@ -45,7 +45,6 @@ const program = P.alt(definition, axiom).many().map((definitions) => new DefLang
 
 const evaluate = (str) => {
     const expr = expression.parse(str);
-    console.log(expr);
     return expr.value.eval(Lang.Ctx.empty());
 };
 
