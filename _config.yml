@@ -1,0 +1,17 @@
+# Permalinks
+permalink:           pretty
+
+# Setup
+title:               Godel
+tagline:             'A platform for mathematics books with a builtin proof checker'
+url:                 http://godel.yellowflash.in/
+baseurl:             ''
+
+# Plugins
+plugins: [jekyll-paginate]
+paginate: 5
+paginate_path: "page:num"
+
+github:
+  repo: "https://github.com/yellowflash/godel"
+version: 0.1.0
