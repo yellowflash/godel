@@ -1,4 +1,4 @@
-const Errors = require("./DefLang.js");
+const Errors = require("./Errors.js");
 const Lang = require("./Lang.js");
 
 class Program {

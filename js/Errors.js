@@ -40,7 +40,8 @@ class NotAFunction extends Errors {
 
     toString() {
         return "Expected function that takes argument '" + this.arg +
-               "' of type, '" + this.argType + "' but found '" + this.leftValue + "' of type '" + this.leftType + "'";
+               "' of type, '" + this.argType + "' but found '" + this.leftValue + 
+               "' of type, '" + this.leftType + "' which is not a function.";
     }
 }
 
