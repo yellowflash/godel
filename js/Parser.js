@@ -5,7 +5,7 @@ const P = require("./lib/Parsimmon.js");
 
 P.opt = (parser) => P.alt(parser, P.succeed(null)) 
 
-const identifier = P.regex(/[a-zA-Z][a-zA-Z0-9]*/).trim(P.optWhitespace);
+const identifier = P.regex(/[a-zA-Z][a-zA-Z0-9-_]*/).trim(P.optWhitespace);
 
 const expression = P.lazy(() => P.alt(paranthesized, star, pi, lambda, variable)
                                  .trim(P.optWhitespace)

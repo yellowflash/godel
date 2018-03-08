@@ -138,8 +138,8 @@ class App extends Expr {
         const [fnValue, fnType] = this.fn.eval(ctx);
         if(fnType instanceof Pi) {
             if(fnType.paramType.alphaConvertsTo(argType, Ctx.empty())) {
-                if(this.fn instanceof Lambda) {
-                    return this.fn.body.eval(ctx.add(this.fn.paramName, [argValue, argType]))[0].eval(ctx);
+                if(fnValue instanceof Lambda) {
+                    return fnValue.body.eval(ctx.add(fnValue.paramName, [argValue, argType]))[0].eval(ctx);
                 } else {
                     return [
                         new App(fnValue, argValue) ,
@@ -149,7 +149,7 @@ class App extends Expr {
                 throw new Errors.ArgumentTypeDontMatch(fnValue, fnType, argValue, argType);
             }
         } else {
-            throw new Errors.NotAFunction(fnValue, argValue, argType);
+            throw new Errors.NotAFunction(fnValue, fnType, argValue, argType);
         }
     }
     

@@ -30,16 +30,17 @@ class ArgumentTypeDontMatch extends Errors {
 }
 
 class NotAFunction extends Errors {
-    constructor(left, arg, argType) {
+    constructor(leftValue, leftType, arg, argType) {
         super();
-        this.left = left;
+        this.leftValue = leftValue;
+        this.leftType = leftType;
         this.arg = arg;
         this.argType = argType;
     }
 
     toString() {
         return "Expected function that takes argument '" + this.arg +
-               "' of type, '" + this.argType + "' but found '" + this.left + "'";
+               "' of type, '" + this.argType + "' but found '" + this.leftValue + "' of type '" + this.leftType + "'";
     }
 }
 

@@ -27,7 +27,7 @@ class Definition extends Statement {
 
     eval(ctx) {
         const [exprValue, exprType] = this.expr.eval(ctx);
-        if(this.type == null || this.type.eval(ctx)[0].alphaConvertsTo(exprType)) {
+        if(this.type == null || this.type.eval(ctx)[0].alphaConvertsTo(exprType, Lang.Ctx.empty())) {
             return ctx.add(this.name, [exprValue, exprType]);
         }
         throw new Errors.TypesDontMatch(this.name, this.type, exprType, exprValue);
