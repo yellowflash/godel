@@ -1,5 +1,6 @@
 const Parser = require("./Parser.js");
 const Lang = require("./Lang.js");
+const Errors = require("./Errors.js");
 const readline = require("readline");
 const process = require("process")
 const fs = require("fs")
@@ -36,7 +37,11 @@ const run = function(files) {
                     Parser.run(content);
                     runInternal(files, index + 1);
                 } catch(e) {
-                    console.log(e.toString());
+                    if(e instanceof Errors.Errors) {
+                        console.log(e.toString());
+                    } else {
+                        console.log(e);
+                    }
                     process.exit(1);
                 }
             }

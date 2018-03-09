@@ -27,7 +27,7 @@ class Definition extends Statement {
 
     eval(ctx) {
         const [exprValue, exprType] = this.expr.eval(ctx);
-        if(this.type == null || this.type.eval(ctx)[0].alphaConvertsTo(exprType, Lang.Ctx.empty())) {
+        if(this.type == null || this.type.eval(ctx)[0].alphaEquiv(exprType)) {
             return ctx.add(this.name, [exprValue, exprType]);
         }
         throw new Errors.TypesDontMatch(this.name, this.type, exprType, exprValue);
@@ -35,14 +35,15 @@ class Definition extends Statement {
 }
 
 class Axiom extends Statement {
-    constructor(name, type) {
+    constructor(name, type, index) {
         super();
         this.name = name;
         this.type = type;
+        this.index = index;
     }
 
     eval(ctx) {
-        return ctx.add(this.name, [new Lang.Var(this.name), this.type.eval(ctx)[0]]);
+        return ctx.add(this.name, [new Lang.Var(this.name, this.index), this.type.eval(ctx)[0]]);
     }
 }
 

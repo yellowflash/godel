@@ -74,6 +74,7 @@ class TypesDontMatch extends Errors {
 }
 
 module.exports = {
+    Errors: Errors,
     ParseError: ParseError,
     ArgumentTypeDontMatch: ArgumentTypeDontMatch, 
     NotAFunction: NotAFunction,
