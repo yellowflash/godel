@@ -1,0 +1,23 @@
+{
+  "name": "Godel",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output"
+  ],
+  "dependencies": {
+    "purescript-prelude": "^4.1.0",
+    "purescript-console": "^4.1.0",
+    "purescript-effect": "^2.0.0",
+    "purescript-free": "^5.1.0",
+    "purescript-transformers": "^4.1.0",
+    "purescript-lists": "^5.3.0",
+    "purescript-ordered-collections": "1.4.0",
+    "purescript-string-parsers": "^5.0.0",
+    "purescript-debug": "^4.0.0"
+  },
+  "devDependencies": {
+    "purescript-psci-support": "^4.0.0"
+  }
+}
